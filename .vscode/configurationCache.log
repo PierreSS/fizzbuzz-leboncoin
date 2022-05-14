@@ -1,0 +1,1 @@
+{"buildTargets":["all","build","clean","go","re","restart","start","stop"],"launchTargets":[],"customConfigurationProvider":{"workspaceBrowse":{"browsePath":[],"compilerArgs":[]},"fileIndex":[]}}
