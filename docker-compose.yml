@@ -1,0 +1,34 @@
+version: '3'
+services:
+  postgres:
+    image: postgres:latest
+    container_name: db-leboncoin
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - DATABASE_HOST=${DB_HOST}
+    ports:
+      - '5432:5432'
+    volumes:
+      - ./data:/var/lib/postgresql/data
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    networks:
+      - default
+
+  app:
+    container_name: fizzbuzz-api
+    build: .
+    env_file:
+      - .env
+    ports:
+      - 4747:4747
+    restart: on-failure
+    depends_on:
+      - postgres
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge

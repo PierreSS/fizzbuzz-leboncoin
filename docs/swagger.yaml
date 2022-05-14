@@ -1,0 +1,95 @@
+basePath: /
+definitions:
+  handlers.RequestStatisticsOutput:
+    properties:
+      hit_number:
+        type: integer
+      int1:
+        type: integer
+      int2:
+        type: integer
+      limit:
+        type: integer
+      str1:
+        type: string
+      str2:
+        type: string
+    type: object
+  models.APIError:
+    properties:
+      code:
+        type: integer
+      msg:
+        type: string
+    type: object
+info:
+  contact:
+    email: pierre.saintsorny@gmail.com
+    name: API Support
+  description: This is the documentation for the golang api of fizzbuzz-leboncoin
+  title: FizzBuzz LeBonCoin API
+  version: "1"
+paths:
+  /:
+    get:
+      responses:
+        "200":
+          description: ""
+      summary: Index of the api
+  /fizzbuzz:
+    get:
+      parameters:
+      - description: "3"
+        in: query
+        name: int1
+        required: true
+        type: integer
+      - description: "5"
+        in: query
+        name: int2
+        required: true
+        type: integer
+      - description: "100"
+        in: query
+        name: limit
+        required: true
+        type: integer
+      - description: fizz
+        in: query
+        name: str1
+        required: true
+        type: string
+      - description: buzz
+        in: query
+        name: str2
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.APIError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.APIError'
+      summary: Replace int1 and int2 by str1 and str2 for x in limit % int1 and int2
+  /statistics:
+    get:
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handlers.RequestStatisticsOutput'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.APIError'
+      summary: Get the name of the max hit number of requests for a fizzbuzz
+swagger: "2.0"
